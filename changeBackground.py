@@ -20,25 +20,26 @@ def get_weather(weather):
 
     return res
 
-html = urlopen('http://www.weather.com.cn/weather/401110101.shtml')
-bs_obj = BeautifulSoup(html.read(), 'html.parser')
-weather = bs_obj.find("p", "wea").text
-tem = bs_obj.find("p", "tem").text
-html.close()
+def get_index():
+    html = urlopen('http://www.weather.com.cn/weather/401110101.shtml')
+    bs_obj = BeautifulSoup(html.read(), 'html.parser')
+    weather = bs_obj.find("p", "wea").text
+    tem = bs_obj.find("p", "tem").text
+    html.close()
 
-res = get_weather(weather)
-print(res)
+    res = get_weather(weather)
+    print(res)
 
-weather_img = "default.jpg"
-if res == "sunny":
-    weather_img = "sunny.jpg"
-elif res == "cloudy":
-    weather_img = "cloudy.jpg"
-elif res == "rainy":
-    weather_img = "rainy.jpg"
-else:
-    weather_img = "snowy.jpg"
-
+    index = -1
+    if res == "sunny":
+        index = 2
+    elif res == "cloudy":
+        index = 1
+    elif res == "rainy":
+        index = 3
+    else:
+        index = 0
+    return index
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
@@ -53,7 +54,7 @@ for imgPath in listImg:
     img = cv2.imread(f'weather_img/{imgPath}')
     imgList.append(img)
 
-indexImg = 0
+indexImg = get_index()
 
 while True:
     success, img = cap.read()
