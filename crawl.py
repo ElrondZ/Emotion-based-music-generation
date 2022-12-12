@@ -28,14 +28,14 @@ html.close()
 res = get_weather(weather)
 print(res)
 
-img = "default.jpg"
+weather_img = "default.jpg"
 if res == "sunny":
-    img = "sunny.jpg"
+    weather_img = "sunny.jpg"
 elif res == "cloudy":
-    img = "cloudy.jpg"
+    weather_img = "cloudy.jpg"
 elif res == "rainy":
-    img = "rainy.jpg"
+    weather_img = "rainy.jpg"
 else:
-    img = "snowy.jpg"
+    weather_img = "snowy.jpg"
 
 
