@@ -8,11 +8,11 @@ from bs4 import BeautifulSoup
 def get_weather(weather):
     res = "sunny"
 
-    if(re.search(r'晴', weather)):
+    if re.search(r'晴', weather):
         res = "sunny"
-    elif(re.search(r'阴', weather)):
+    elif re.search(r'阴', weather):
         res = "cloudy"
-    elif(re.search(r'雨', weather)):
+    elif re.search(r'雨', weather):
         res = "rainy"
     else:
         res = "snowy"
@@ -23,9 +23,19 @@ html = urlopen('http://www.weather.com.cn/weather/401110101.shtml')
 bs_obj = BeautifulSoup(html.read(), 'html.parser')
 weather = bs_obj.find("p", "wea").text
 tem = bs_obj.find("p", "tem").text
+html.close()
 
-# res = get_weather(weather)
 res = get_weather(weather)
 print(res)
-html.close()
+
+img = "default.jpg"
+if res == "sunny":
+    img = "sunny.jpg"
+elif res == "cloudy":
+    img = "cloudy.jpg"
+elif res == "rainy":
+    img = "rainy.jpg"
+else:
+    img = "snowy.jpg"
+
 
