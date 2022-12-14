@@ -1,9 +1,8 @@
-#test_html.py
-#在url库里，查找request模块，导入urlopen函数
-
+import tkinter
 import re
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+import tkinter
 
 def get_weather(weather):
     res = "sunny"
@@ -19,23 +18,31 @@ def get_weather(weather):
 
     return res
 
-html = urlopen('http://www.weather.com.cn/weather/401110101.shtml')
-bs_obj = BeautifulSoup(html.read(), 'html.parser')
-weather = bs_obj.find("p", "wea").text
-tem = bs_obj.find("p", "tem").text
-html.close()
 
-res = get_weather(weather)
-print(res)
+def get_index():
+    html = urlopen('http://www.weather.com.cn/weather/401110101.shtml')
+    bs_obj = BeautifulSoup(html.read(), 'html.parser')
+    weather = bs_obj.find("p", "wea").text
+    tem = bs_obj.find("p", "tem").text
+    html.close()
 
-weather_img = "default.jpg"
-if res == "sunny":
-    weather_img = "sunny.jpg"
-elif res == "cloudy":
-    weather_img = "cloudy.jpg"
-elif res == "rainy":
-    weather_img = "rainy.jpg"
-else:
-    weather_img = "snowy.jpg"
+    res = get_weather(weather)
+    print(res)
+
+    index = -1
+    if res == "sunny":
+        index = 2
+    elif res == "cloudy":
+        index = 1
+    elif res == "rainy":
+        index = 3
+    else:
+        index = 0
+    return index
 
 
+# root = tkinter.Tk()
+# root.title("Main Page")
+# root.geometry("400x200")
+# label = tkinter.Label(root, text="welcome")
+# label.pack()
